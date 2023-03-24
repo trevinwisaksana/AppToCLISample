@@ -8,15 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    private let shell = Shell()
+    
+    @State var output: String = ""
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text(output)
+            
+            Button {
+                do {
+                    output = try shell.run(["--version"])
+                } catch {
+                    print("Error: \(error.localizedDescription)")
+                }
+            } label: {
+                Text("Run")
+            }
         }
         .padding()
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
